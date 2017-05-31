@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FoodModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Food">
+    <Key>
+      <PropertyRef Name="FoodID" />
+    </Key>
+    <Property Name="FoodID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FoodName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="RestaurantName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Foodpicture" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BytesImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="CategoryID" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="FoodCategory" Relationship="Self.FK_Food_ToFoodCategory" FromRole="Food" ToRole="FoodCategory" />
+  </EntityType>
+  <EntityType Name="FoodCategory">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Food" Relationship="Self.FK_Food_ToFoodCategory" FromRole="FoodCategory" ToRole="Food" />
+  </EntityType>
+  <Association Name="FK_Food_ToFoodCategory">
+    <End Role="FoodCategory" Type="Self.FoodCategory" Multiplicity="0..1" />
+    <End Role="Food" Type="Self.Food" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FoodCategory">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="Food">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FoodEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Food" EntityType="Self.Food" />
+    <EntitySet Name="FoodCategory" EntityType="Self.FoodCategory" />
+    <AssociationSet Name="FK_Food_ToFoodCategory" Association="Self.FK_Food_ToFoodCategory">
+      <End Role="FoodCategory" EntitySet="FoodCategory" />
+      <End Role="Food" EntitySet="Food" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

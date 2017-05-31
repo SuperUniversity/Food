@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FoodModelStoreContainer" CdmEntityContainer="FoodEntities">
+    <EntitySetMapping Name="Food">
+      <EntityTypeMapping TypeName="FoodModel.Food">
+        <MappingFragment StoreEntitySet="Food">
+          <ScalarProperty Name="FoodID" ColumnName="FoodID" />
+          <ScalarProperty Name="FoodName" ColumnName="FoodName" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="RestaurantName" ColumnName="RestaurantName" />
+          <ScalarProperty Name="Foodpicture" ColumnName="Foodpicture" />
+          <ScalarProperty Name="BytesImage" ColumnName="BytesImage" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FoodCategory">
+      <EntityTypeMapping TypeName="FoodModel.FoodCategory">
+        <MappingFragment StoreEntitySet="FoodCategory">
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

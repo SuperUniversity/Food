@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FoodModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="FoodID" />
+          </Key>
+          <Property Name="FoodID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FoodName" Type="nvarchar" MaxLength="50" />
+          <Property Name="price" Type="money" />
+          <Property Name="RestaurantName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Foodpicture" Type="nvarchar" MaxLength="50" />
+          <Property Name="BytesImage" Type="image" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="FoodCategory">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Food_ToFoodCategory">
+          <End Role="FoodCategory" Type="Self.FoodCategory" Multiplicity="0..1" />
+          <End Role="Food" Type="Self.Food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodCategory">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Food">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FoodModelStoreContainer">
+          <EntitySet Name="Food" EntityType="Self.Food" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FoodCategory" EntityType="Self.FoodCategory" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Food_ToFoodCategory" Association="Self.FK_Food_ToFoodCategory">
+            <End Role="FoodCategory" EntitySet="FoodCategory" />
+            <End Role="Food" EntitySet="Food" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FoodModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="FoodID" />
+          </Key>
+          <Property Name="FoodID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FoodName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RestaurantName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Foodpicture" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BytesImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FoodCategory" Relationship="Self.FK_Food_ToFoodCategory" FromRole="Food" ToRole="FoodCategory" />
+        </EntityType>
+        <EntityType Name="FoodCategory">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Food" Relationship="Self.FK_Food_ToFoodCategory" FromRole="FoodCategory" ToRole="Food" />
+        </EntityType>
+        <Association Name="FK_Food_ToFoodCategory">
+          <End Role="FoodCategory" Type="Self.FoodCategory" Multiplicity="0..1" />
+          <End Role="Food" Type="Self.Food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodCategory">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Food">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FoodEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Food" EntityType="Self.Food" />
+          <EntitySet Name="FoodCategory" EntityType="Self.FoodCategory" />
+          <AssociationSet Name="FK_Food_ToFoodCategory" Association="Self.FK_Food_ToFoodCategory">
+            <End Role="FoodCategory" EntitySet="FoodCategory" />
+            <End Role="Food" EntitySet="Food" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FoodModelStoreContainer" CdmEntityContainer="FoodEntities">
+          <EntitySetMapping Name="Food">
+            <EntityTypeMapping TypeName="FoodModel.Food">
+              <MappingFragment StoreEntitySet="Food">
+                <ScalarProperty Name="FoodID" ColumnName="FoodID" />
+                <ScalarProperty Name="FoodName" ColumnName="FoodName" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="RestaurantName" ColumnName="RestaurantName" />
+                <ScalarProperty Name="Foodpicture" ColumnName="Foodpicture" />
+                <ScalarProperty Name="BytesImage" ColumnName="BytesImage" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoodCategory">
+            <EntityTypeMapping TypeName="FoodModel.FoodCategory">
+              <MappingFragment StoreEntitySet="FoodCategory">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
